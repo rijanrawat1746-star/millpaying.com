@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Menaka ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Lora',serif;background:#0a0a0a;overflow:hidden;width:100vw;height:100vh;color:#fff}
+.screen{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 0.8s ease,transform 0.8s ease;z-index:50}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(0.95)}
+.screen.active{opacity:1;pointer-events:all;transform:scale(1)}
+
+/* Background Glow */
+.bg-glow{position:fixed;width:500px;height:500px;border-radius:50%;filter:blur(150px);opacity:0.15;pointer-events:none;z-index:0}
+.bg-glow-1{background:#e11d48;top:-100px;left:-100px}
+.bg-glow-2{background:#d4a574;bottom:-100px;right:-100px}
+.bg-glow-3{background:#f43f5e;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;opacity:0.05}
+
+/* ===== PASSWORD SCREEN ===== */
+#passwordScreen{background:linear-gradient(135deg,#0a0a0a 0%,#1a0a10 50%,#0a0a0a 100%)}
+.lock-icon{width:80px;height:80px;border:3px solid rgba(244,63,94,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:30px;animation:lockPulse 2s ease-in-out infinite}
+.lock-icon svg{width:36px;height:36px;stroke:#f43f5e;fill:none;stroke-width:1.5}
+@keyframes lockPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.3)}50%{box-shadow:0 0 0 15px rgba(244,63,94,0)}}
+.pass-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:rgba(255,255,255,0.9);margin-bottom:8px;text-align:center}
+.pass-subtitle{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:35px;text-align:center;font-style:italic}
+.pass-input-wrap{position:relative;width:280px;margin-bottom:20px}
+.pass-input{width:100%;padding:14px 50px 14px 20px;background:rgba(255,255,255,0.06);border:1px solid rgba(244,63,94,0.25);border-radius:12px;color:#fff;font-family:'Lora',serif;font-size:1rem;outline:none;transition:border-color 0.3s,box-shadow 0.3s;letter-spacing:2px}
+.pass-input:focus{border-color:rgba(244,63,94,0.6);box-shadow:0 0 20px rgba(244,63,94,0.1)}
+.pass-input::placeholder{color:rgba(255,255,255,0.25);letter-spacing:1px;font-size:0.85rem}
+.pass-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;padding:4px}
+.pass-toggle:hover{color:rgba(255,255,255,0.7)}
+.pass-btn{width:280px;padding:14px;background:linear-gradient(135deg,#e11d48,#f43f5e);border:none;border-radius:12px;color:#fff;font-family:'Playfair Display',serif;font-size:1rem;cursor:pointer;transition:all 0.3s;letter-spacing:0.5px}
+.pass-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(225,29,72,0.4)}
+.pass-btn:active{transform:translateY(0)}
+.pass-error{color:#f43f5e;font-size:0.8rem;margin-top:12px;opacity:0;transition:opacity 0.3s;text-align:center}
+.pass-error.show{opacity:1}
+.shake{animation:shake 0.5s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+/* ===== CANDLE SCREEN ===== */
+#candleScreen{background:linear-gradient(135deg,#0a0a0a 0%,#12080c 50%,#0a0a0a 100%)}
+.candle-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:rgba(255,255,255,0.8);margin-bottom:10px;text-align:center}
+.candle-subtitle{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:50px;font-style:italic;text-align:center}
+
+/* Cake */
+.cake-wrap{position:relative;margin-bottom:40px}
+.cake-glow{position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(251,191,36,0.12) 0%,transparent 70%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);transition:opacity 0.8s;pointer-events:none}
+.cake-glow.out{opacity:0}
+.cake{position:relative;display:flex;flex-direction:column;align-items:center;cursor:pointer}
+.cake-plate{width:220px;height:14px;background:linear-gradient(to bottom,#d4d4d4,#a3a3a3);border-radius:0 0 50% 50%/0 0 100% 100%;margin-top:-2px}
+.cake-tier1{width:200px;height:65px;background:linear-gradient(to bottom,#f9a8d4,#ec4899);border-radius:8px 8px 12px 12px;position:relative;overflow:hidden}
+.cake-tier1::before{content:'';position:absolute;top:0;left:0;right:0;height:12px;background:linear-gradient(to bottom,rgba(255,255,255,0.3),transparent);border-radius:8px 8px 0 0}
+.cake-tier2{width:150px;height:50px;background:linear-gradient(to bottom,#fbcfe8,#f9a8d4);border-radius:8px;position:relative;overflow:hidden}
+.cake-tier2::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:linear-gradient(to bottom,rgba(255,255,255,0.35),transparent);border-radius:8px 8px 0 0}
+.cake-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:8px}
+.cake-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.5)}
+.candles-row{display:flex;gap:30px;margin-bottom:-5px;position:relative;z-index:2}
+.candle{display:flex;flex-direction:column;align-items:center}
+.candle-body{width:8px;height:38px;background:linear-gradient(to bottom,#fef3c7,#fde68a,#fbbf24);border-radius:3px 3px 1px 1px;position:relative}
+.candle-body::after{content:'';position:absolute;bottom:0;left:1px;width:2px;height:8px;background:rgba(0,0,0,0.1);border-radius:0 0 1px 1px}
+.candle-stripe{position:absolute;width:100%;height:4px;background:rgba(236,72,153,0.4)}
+.candle-stripe:nth-child(1){top:8px}
+.candle-stripe:nth-child(2){top:18px}
+.candle-stripe:nth-child(3){top:28px}
+.flame-wrap{position:relative;width:20px;height:24px;margin-bottom:-4px}
+.flame{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:12px;height:18px;background:radial-gradient(ellipse at 50% 85%,#fff 0%,#fbbf24 25%,#f97316 55%,#ef4444 80%,transparent 100%);border-radius:50% 50% 50% 50%/60% 60% 35% 35%;animation:flame 0.3s ease-in-out infinite alternate;filter:blur(0.3px);transition:all 0.5s}
+.flame.out{animation:blowOut 0.6s ease-out forwards}
+@keyframes flame{from{transform:translateX(-50%) scaleY(1) scaleX(1) rotate(-2deg)}to{transform:translateX(-50%) scaleY(1.12) scaleX(0.92) rotate(2deg)}}
+@keyframes blowOut{0%{opacity:1;transform:translateX(-50%) scaleY(1)}40%{opacity:0.6;transform:translateX(-50%) scaleY(1.4) scaleX(0.6) translateX(6px)}100%{opacity:0;transform:translateX(-50%) scaleY(0) scaleX(0) translateX(10px)}}
+.flame-glow{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:radial-gradient(circle,rgba(251,191,36,0.3),transparent 70%);border-radius:50%;animation:glowP 1.5s ease-in-out infinite alternate;transition:opacity 0.5s}
+.flame-glow.out{opacity:0}
+@keyframes glowP{from{opacity:0.5;transform:translateX(-50%) scale(1)}to{opacity:0.8;transform:translateX(-50%) scale(1.2)}}
+.smoke{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:4px;height:0;background:rgba(200,200,200,0.25);border-radius:50%;filter:blur(3px);opacity:0}
+.smoke.rise{animation:smokeRise 1.5s ease-out forwards}
+@keyframes smokeRise{0%{height:0;opacity:0.4;transform:translateX(-50%) translateY(0) scaleX(1)}100%{height:25px;opacity:0;transform:translateX(-50%) translateY(-45px) scaleX(2.5)}}
+.mic-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;margin-top:10px}
+.mic-btn:hover{background:rgba(244,63,94,0.15);border-color:rgba(244,63,94,0.3);color:#f43f5e}
+.mic-btn.active{background:rgba(244,63,94,0.2);border-color:#f43f5e;color:#f43f5e;animation:micPulse 1.5s infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.3)}50%{box-shadow:0 0 0 10px rgba(244,63,94,0)}}
+.tap-hint{font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:12px;font-style:italic;opacity:0;transition:opacity 0.5s}
+.tap-hint.show{opacity:1}
+.wish-text{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fbbf24;opacity:0;transform:translateY(10px);transition:all 0.8s ease;margin-top:20px;text-align:center}
+.wish-text.show{opacity:1;transform:translateY(0)}
+
+/* ===== BOOK SCREEN ===== */
+#bookScreen{background:linear-gradient(135deg,#0a0a0a 0%,#100810 50%,#0a0a0a 100%);perspective:2000px}
+.book{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.page{position:absolute;top:0;left:0;width:100%;height:100%;transform-origin:left center;backface-visibility:hidden;transition:transform 1.2s cubic-bezier(0.645,0.045,0.355,1);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:40px 30px;overflow-y:auto;background:linear-gradient(160deg,rgba(20,10,15,0.95),rgba(15,8,12,0.98));-webkit-overflow-scrolling:touch}
+.page.flipped{transform:rotateY(-180deg);pointer-events:none}
+.page-1{z-index:10}.page-2{z-index:9}.page-3{z-index:8}.page-4{z-index:7}.page-5{z-index:6}.page-6{z-index:5}
+.page-inner{max-width:600px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}
+
+/* Page Content Styles */
+.pg-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:4px;color:rgba(244,63,94,0.6);margin-bottom:20px}
+.pg-title{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:500;line-height:1.15;margin-bottom:10px}
+.pg-title.rose{color:#f43f5e}
+.pg-title.gold{color:#d4a574}
+.pg-name{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:600;font-style:italic;color:#f43f5e;line-height:1.2;margin-bottom:20px;text-shadow:0 0 40px rgba(244,63,94,0.3)}
+.pg-text{font-size:0.95rem;line-height:1.9;color:rgba(255,255,255,0.65);font-weight:300;max-width:480px;margin-bottom:15px}
+.pg-text.italic{font-style:italic;color:rgba(255,255,255,0.5)}
+.pg-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.5),transparent);margin:25px 0}
+.pg-heart{color:#f43f5e;font-size:1.2rem;margin:15px 0;animation:heartBeat 1.5s ease-in-out infinite}
+@keyframes heartBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+.pg-img{width:100%;max-width:360px;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:20px 0;border:2px solid rgba(244,63,94,0.15);position:relative}
+.pg-img img{width:100%;height:auto;display:block;transition:transform 0.7s ease}
+.pg-img:hover img{transform:scale(1.03)}
+.pg-img-caption{font-size:0.8rem;font-style:italic;color:rgba(255,255,255,0.35);margin-top:12px}
+.turn-btn{margin-top:30px;padding:12px 36px;background:transparent;border:1px solid rgba(244,63,94,0.3);border-radius:50px;color:rgba(255,255,255,0.7);font-family:'Lora',serif;font-size:0.85rem;cursor:pointer;transition:all 0.4s;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.turn-btn:hover{background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.5);color:#fff;transform:translateY(-2px);box-shadow:0 8px 25px rgba(244,63,94,0.15)}
+.turn-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;transition:transform 0.3s}
+.turn-btn:hover svg{transform:translateX(4px)}
+
+/* Romantic Card */
+.romantic-card{background:linear-gradient(145deg,rgba(30,15,22,0.9),rgba(20,10,15,0.95));border:1px solid rgba(244,63,94,0.15);border-radius:20px;padding:40px 30px;max-width:480px;width:100%;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.4)}
+.romantic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.5),#d4a574,rgba(244,63,94,0.5),transparent)}
+.card-greeting{font-family:'Playfair Display',serif;font-size:1.1rem;color:#d4a574;margin-bottom:20px;font-style:italic}
+.card-body{font-size:0.9rem;line-height:2;color:rgba(255,255,255,0.6);text-align:left;margin-bottom:25px}
+.card-body p{margin-bottom:12px}
+.card-sign{font-family:'Playfair Display',serif;font-size:1rem;color:rgba(244,63,94,0.7);text-align:right;font-style:italic}
+.card-seal{width:60px;height:60px;border:2px solid rgba(244,63,94,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:20px auto 0;font-size:1.5rem;animation:sealPulse 2s ease-in-out infinite}
+@keyframes sealPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.2)}50%{box-shadow:0 0 0 10px rgba(244,63,94,0)}}
+.gift-text{font-family:'Playfair Display',serif;font-size:1.6rem;color:#f43f5e;margin:20px 0 5px;font-weight:500}
+.gift-sub{font-size:0.8rem;color:rgba(255,255,255,0.35);font-style:italic}
+
+/* Sparkles */
+.sparkle{position:absolute;width:3px;height:3px;background:#fbbf24;border-radius:50%;animation:sparkle 3s ease-in-out infinite;pointer-events:none}
+@keyframes sparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:0.8;transform:scale(1)}}
+
+/* ===== FALLING FLOWERS ===== */
+#flowers{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:60;overflow:hidden}
+.falling-flower{position:absolute;top:-60px;pointer-events:none;animation:fall linear infinite;will-change:transform}
+@keyframes fall{0%{transform:translateY(-60px) rotate(0deg) translateX(0)}20%{transform:translateY(20vh) rotate(72deg) translateX(25px)}40%{transform:translateY(40vh) rotate(144deg) translateX(-15px)}60%{transform:translateY(60vh) rotate(216deg) translateX(20px)}80%{transform:translateY(80vh) rotate(288deg) translateX(-10px)}100%{transform:translateY(110vh) rotate(360deg) translateX(5px)}}
+
+/* Future Icons */
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:25px 0;width:100%;max-width:360px}
+.future-item{text-align:center}
+.future-icon{width:50px;height:50px;border-radius:50%;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.3rem;transition:all 0.3s}
+.future-item:hover .future-icon{background:rgba(244,63,94,0.15);border-color:rgba(244,63,94,0.3);transform:translateY(-3px)}
+.future-label{font-size:0.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+
+/* Page Number */
+.page-num{position:absolute;bottom:20px;font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:2px}
+
+/* Responsive */
+@media(max-width:640px){
+.pg-title{font-size:2rem}
+.pg-name{font-size:2.5rem}
+.pg-text{font-size:0.85rem}
+.page{padding:30px 20px}
+.romantic-card{padding:30px 20px}
+.cake-tier1{width:160px;height:55px}
+.cake-tier2{width:120px;height:42px}
+.cake-plate{width:180px}
+.candles-row{gap:22px}
+.future-grid{gap:12px}
+.future-icon{width:42px;height:42px;font-size:1.1rem}
+.gift-text{font-size:1.3rem}
+.card-body{font-size:0.82rem;line-height:1.9}
+}
+</style>
+</head>
+<body>
+
+<!-- Background Glows -->
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<!-- Falling Flowers Container -->
+<div id="flowers" class="hidden"></div>
+
+<!-- ===== PASSWORD SCREEN ===== -->
+<div id="passwordScreen" class="screen active">
+  <div class="lock-icon">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </div>
+  <p class="pass-title">This surprise is only for Menaka</p>
+  <p class="pass-subtitle">Enter the secret password to unlock ❤️</p>
+  <div class="pass-input-wrap" id="passWrap">
+    <input type="password" class="pass-input" id="passInput" placeholder="•••••••" autocomplete="off">
+    <button class="pass-toggle" id="passToggle" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+  </div>
+  <button class="pass-btn" id="passBtn">Unlock My Heart ❤️</button>
+  <p class="pass-error" id="passError">Wrong password... This is only for Menaka 💔</p>
+</div>
+
+<!-- ===== CANDLE SCREEN ===== -->
+<div id="candleScreen" class="screen hidden">
+  <p class="candle-title">Make a wish, Menaka 🎂</p>
+  <p class="candle-subtitle">Blow the candles to unlock your surprise</p>
+  
+  <div class="cake-wrap">
+    <div class="cake-glow" id="cakeGlow"></div>
+    <div class="cake" id="cake" title="Tap to blow candles">
+      <div class="candles-row">
+        <div class="candle">
+          <div class="flame-wrap"><div class="flame" id="flame1"></div><div class="flame-glow" id="glow1"></div></div>
+          <div class="candle-body"><div class="candle-stripe"></div><div class="candle-stripe"></div><div class="candle-stripe"></div></div>
+        </div>
+        <div class="candle">
+          <div class="flame-wrap"><div class="flame" id="flame2"></div><div class="flame-glow" id="glow2"></div></div>
+          <div class="candle-body"><div class="candle-stripe"></div><div class="candle-stripe"></div><div class="candle-stripe"></div></div>
+        </div>
+        <div class="candle">
+          <div class="flame-wrap"><div class="flame" id="flame3"></div><div class="flame-glow" id="glow3"></div></div>
+          <div class="candle-body"><div class="candle-stripe"></div><div class="candle-stripe"></div><div class="candle-stripe"></div></div>
+        </div>
+      </div>
+      <div class="cake-tier2">
+        <div class="cake-dots"><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div></div>
+      </div>
+      <div class="cake-tier1">
+        <div class="cake-dots"><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div></div>
+      </div>
+      <div class="cake-plate"></div>
+    </div>
+  </div>
+
+  <button class="mic-btn" id="micBtn" title="Enable microphone to blow">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+  </button>
+  <p class="tap-hint" id="tapHint">or tap the cake to blow 🎂</p>
+  <p class="wish-text" id="wishText">✨ Make a wish, my love ✨</p>
+</div>
+
+<!-- ===== BOOK SCREEN ===== -->
+<div id="bookScreen" class="screen hidden">
+  <div class="book">
+
+    <!-- PAGE 1: Title -->
+    <div class="page page-1" id="page1">
+      <div class="page-inner">
+        <p class="pg-label">✦ A Love Story ✦</p>
+        <p class="pg-title">Happy Birthday</p>
+        <p class="pg-name">Menaka</p>
+        <div class="pg-divider"></div>
+        <p class="pg-text italic">"Some stories are written in the stars,<br>and ours is the most beautiful one."</p>
+        <div class="pg-heart">❤️</div>
+        <button class="turn-btn" onclick="turnPage(1)">
+          Begin Our Story
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <span class="page-num">~ i ~</span>
+    </div>
+
+    <!-- PAGE 2: Bachelor Days -->
+    <div class="page page-2" id="page2">
+      <div class="page-inner">
+        <p class="pg-label">Chapter One</p>
+        <p class="pg-title gold" style="font-size:2rem">Once Upon a Time...</p>
+        <div class="pg-divider"></div>
+        <p class="pg-text">Before you walked into my life, my days were simple — ordinary chapters waiting for their meaning.</p>
+        <p class="pg-text">A bachelor's world... quiet mornings, routine evenings, a life that was okay but never magical.</p>
+        <p class="pg-text italic" style="color:rgba(212,165,116,0.7)">"I didn't know what was missing until you became the answer to every question my heart never asked."</p>
+        <div class="pg-heart">💛</div>
+        <button class="turn-btn" onclick="turnPage(2)">
+          Then You Came
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <span class="page-num">~ ii ~</span>
+    </div>
+
+    <!-- PAGE 3: First Image -->
+    <div class="page page-3" id="page3">
+      <div class="page-inner">
+        <p class="pg-label">Chapter Two</p>
+        <p class="pg-title rose" style="font-size:1.8rem">Our Beautiful Moments</p>
+        <div class="pg-divider"></div>
+        <div class="pg-img">
+          <img src="https://z-cdn-media.chatglm.cn/files/7cc27f1f-a4c6-4c8b-a0ee-f9951b843e5c.jpeg?auth_key=1884696405-7dd4c6f0318d42b782f3d0d0f0fd5bb5-0-b4ac785eea42b5ba005165a655fe5f08" alt="Our selfie together" loading="eager">
+        </div>
+        <p class="pg-img-caption">Under the same sky, beside the one I love</p>
+        <p class="pg-text italic">"Every moment with you feels like a dream I never want to wake up from. Your smile lights up my entire universe."</p>
+        <button class="turn-btn" onclick="turnPage(3)">
+          More Memories
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <span class="page-num">~ iii ~</span>
+    </div>
+
+    <!-- PAGE 4: Second Image -->
+    <div class="page page-4" id="page4">
+      <div class="page-inner">
+        <p class="pg-label">Chapter Three</p>
+        <p class="pg-title rose" style="font-size:1.8rem">Growing Closer Every Day</p>
+        <div class="pg-divider"></div>
+        <div class="pg-img">
+          <img src="https://z-cdn-media.chatglm.cn/files/6f8b5bcd-407d-44ae-9288-008189a0192e.jpeg?auth_key=1884696405-ad56d872751d411097dddb589fc0983a-0-62ea5cfbf85851222c4a24f8a5a22776" alt="Sitting together on grass" loading="eager">
+        </div>
+        <p class="pg-img-caption">Sitting beside you — I found my peace</p>
+        <p class="pg-text italic">"On that green grass, under that open sky, sitting next to you... I realized you are my home. Not a place, but a person. You are my home, Menaka."</p>
+        <button class="turn-btn" onclick="turnPage(4)">
+          Our Future
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <span class="page-num">~ iv ~</span>
+    </div>
+
+    <!-- PAGE 5: Future -->
+    <div class="page page-5" id="page5">
+      <div class="page-inner">
+        <p class="pg-label">Chapter Four</p>
+        <p class="pg-title gold" style="font-size:2rem">Our Future Together</p>
+        <div class="pg-divider"></div>
+        <p class="pg-text">From this day to forever... I dream of a life where every morning starts with your smile and every night ends in your arms.</p>
+        <div class="future-grid">
+          <div class="future-item">
+            <div class="future-icon">💍</div>
+            <p class="future-label">Wedding</p>
+          </div>
+          <div class="future-item">
+            <div class="future-icon">🏠</div>
+            <p class="future-label">Home</p>
+          </div>
+          <div class="future-item">
+            <div class="future-icon">✈️</div>
+            <p class="future-label">Adventures</p>
+          </div>
+          <div class="future-item">
+            <div class="future-icon">🌅</div>
+            <p class="future-label">Sunsets</p>
+          </div>
+          <div class="future-item">
+            <div class="future-icon">👨‍👩‍👧</div>
+            <p class="future-label">Family</p>
+          </div>
+          <div class="future-item">
+            <div class="future-icon">♾️</div>
+            <p class="future-label">Forever</p>
+          </div>
+        </div>
+        <p class="pg-text italic" style="color:rgba(212,165,116,0.7)">"I dream of calling you my wife, of building a world just for us. Our story doesn't end here — it only begins."</p>
+        <button class="turn-btn" onclick="turnPage(5)">
+          Your Gift Awaits
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <span class="page-num">~ v ~</span>
+    </div>
+
+    <!-- PAGE 6: Romantic Card -->
+    <div class="page page-6" id="page6">
+      <div class="page-inner">
+        <p class="pg-label">✦ The Final Chapter ✦</p>
+        <p class="gift-text">In Your Gift Is Love</p>
+        <p class="gift-sub">the only thing that truly matters</p>
+        <div class="pg-divider"></div>
+        
+        <div class="romantic-card">
+          <p class="card-greeting">Dearest Menaka,</p>
+          <div class="card-body">
+            <p>In a world full of temporary things, you are my forever. From the very first moment you walked into my life, every single day became a celebration.</p>
+            <p>Your smile is my sunrise, your laughter is my favorite song, and your love is the greatest gift the universe could ever give me.</p>
+            <p>They say the best things in life cannot be seen or touched — they must be felt with the heart. And what I feel for you is beyond words, beyond measure, beyond time itself.</p>
+            <p>So today, on your birthday, I give you the only thing that is truly mine to give — <strong style="color:#f43f5e">my love</strong>. Unconditionally. Endlessly. Eternally.</p>
+          </div>
+          <div class="pg-divider" style="margin:20px 0"></div>
+          <p class="card-sign">Forever & Always Yours,<br><span style="color:#f43f5e;font-size:1.1rem">❤️ Your Love</span></p>
+        </div>
+        
+        <div class="card-seal">❤️</div>
+        <p class="pg-text italic" style="margin-top:25px;font-size:0.8rem;color:rgba(255,255,255,0.3)">Happy Birthday, my beautiful Menaka 🎂🌹</p>
+      </div>
+      <span class="page-num">~ vi ~</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ===== PASSWORD LOGIC =====
+const passInput = document.getElementById('passInput');
+const passBtn = document.getElementById('passBtn');
+const passError = document.getElementById('passError');
+const passWrap = document.getElementById('passWrap');
+const passToggle = document.getElementById('passToggle');
+
+passToggle.addEventListener('click', () => {
+  const isPass = passInput.type === 'password';
+  passInput.type = isPass ? 'text' : 'password';
+  passToggle.innerHTML = isPass 
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+});
+
+function checkPassword() {
+  if (passInput.value === 'suman123') {
+    document.getElementById('passwordScreen').classList.add('hidden');
+    document.getElementById('passwordScreen').classList.remove('active');
+    setTimeout(() => {
+      document.getElementById('candleScreen').classList.remove('hidden');
+      document.getElementById('candleScreen').classList.add('active');
+      document.getElementById('tapHint').classList.add('show');
+    }, 500);
+  } else {
+    passError.classList.add('show');
+    passWrap.classList.add('shake');
+    passInput.style.borderColor = 'rgba(239,68,68,0.6)';
+    setTimeout(() => {
+      passWrap.classList.remove('shake');
+      passInput.style.borderColor = '';
+    }, 500);
+  }
+}
+
+passBtn.addEventListener('click', checkPassword);
+passInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') checkPassword();
+  passError.classList.remove('show');
+});
+
+// ===== CANDLE BLOWING LOGIC =====
+let candlesBlown = false;
+let micActive = false;
+let audioContext, analyser, dataArray, micStream;
+
+const cake = document.getElementById('cake');
+const micBtn = document.getElementById('micBtn');
+
+// Tap to blow
+cake.addEventListener('click', () => {
+  if (!candlesBlown) blowCandles();
+});
+
+// Mic blow detection
+micBtn.addEventListener('click', async () => {
+  if (micActive) return;
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    const source = audioContext.createMediaStreamSource(micStream);
+    source.connect(analyser);
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    micActive = true;
+    micBtn.classList.add('active');
+    document.getElementById('tapHint').textContent = 'Now blow into your mic... 🌬️';
+    document.getElementById('tapHint').classList.add('show');
+    detectBlow();
+  } catch (err) {
+    document.getElementById('tapHint').textContent = 'Mic not available — tap the cake instead 🎂';
+    document.getElementById('tapHint').classList.add('show');
+  }
+});
+
+function detectBlow() {
+  if (candlesBlown) return;
+  analyser.getByteFrequencyData(dataArray);
+  let sum = 0;
+  for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+  const avg = sum / dataArray.length;
+  if (avg > 45) {
+    blowCandles();
+    return;
+  }
+  if (micActive) requestAnimationFrame(detectBlow);
+}
+
+function blowCandles() {
+  if (candlesBlown) return;
+  candlesBlown = true;
+  
+  // Stop mic
+  if (micStream) micStream.getTracks().forEach(t => t.stop());
+  if (audioContext) audioContext.close();
+  micBtn.classList.remove('active');
+  
+  // Blow out flames with stagger
+  document.getElementById('flame1').classList.add('out');
+  document.getElementById('glow1').classList.add('out');
+  setTimeout(() => document.getElementById('flame2').classList.add('out'), 150);
+  setTimeout(() => document.getElementById('glow2').classList.add('out'), 150);
+  setTimeout(() => document.getElementById('flame3').classList.add('out'), 300);
+  setTimeout(() => document.getElementById('glow3').classList.add('out'), 300);
+  
+  // Add smoke
+  setTimeout(() => {
+    document.querySelectorAll('.flame-wrap').forEach(fw => {
+      const smoke = document.createElement('div');
+      smoke.className = 'smoke rise';
+      fw.appendChild(smoke);
+    });
+  }, 500);
+  
+  // Remove glow
+  document.getElementById('cakeGlow').classList.add('out');
+  
+  // Show wish text
+  setTimeout(() => {
+    document.getElementById('wishText').classList.add('show');
+  }, 800);
+  
+  // Transition to book
+  setTimeout(() => {
+    document.getElementById('candleScreen').classList.add('hidden');
+    document.getElementById('candleScreen').classList.remove('active');
+    setTimeout(() => {
+      document.getElementById('bookScreen').classList.remove('hidden');
+      document.getElementById('bookScreen').classList.add('active');
+      document.getElementById('flowers').classList.remove('hidden');
+      createFlowers();
+    }, 500);
+  }, 3000);
+}
+
+// ===== PAGE TURN LOGIC =====
+let currentPage = 1;
+
+function turnPage(pageNum) {
+  const page = document.getElementById('page' + pageNum);
+  if (page && !page.classList.contains('flipped')) {
+    page.classList.add('flipped');
+    currentPage = pageNum + 1;
+  }
+}
+
+// ===== FALLING FLOWERS =====
+function createFlowers() {
+  const container = document.getElementById('flowers');
+  const types = ['🌹','🌸','💕','🩷','✨','💗','🪷','🏵️','❤️‍🔥','🩵'];
+  
+  for (let i = 0; i < 45; i++) {
+    const flower = document.createElement('div');
+    flower.className = 'falling-flower';
+    flower.textContent = types[Math.floor(Math.random() * types.length)];
+    flower.style.left = Math.random() * 100 + '%';
+    flower.style.animationDuration = (6 + Math.random() * 12) + 's';
+    flower.style.animationDelay = Math.random() * 15 + 's';
+    flower.style.fontSize = (10 + Math.random() * 22) + 'px';
+    flower.style.opacity = 0.3 + Math.random() * 0.5;
+    container.appendChild(flower);
+  }
+}
+
+// ===== ADD SPARKLES TO PAGES =====
+document.querySelectorAll('.page').forEach(page => {
+  for (let i = 0; i < 6; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * 90 + 5 + '%';
+    sparkle.style.top = Math.random() * 90 + 5 + '%';
+    sparkle.style.animationDelay = Math.random() * 3 + 's';
+    sparkle.style.animationDuration = (2 + Math.random() * 3) + 's';
+    page.appendChild(sparkle);
+  }
+});
+</script>
+</body>
+</html>
